@@ -23,6 +23,23 @@ startQuizBtn.addEventListener("click", async function () {
   let difficulty = difficultyOptions.value;
   let amount = questionsNumber.value;
   let type = typeOptions.value;
+  const alertMsg = document.getElementById("input-alert");
+
+  alertMsg.classList.add("d-none");
+  alertMsg.innerText = "";
+
+  // Validate inputs
+  if (!category || !difficulty || !amount || !type) {
+    alertMsg.innerText = "❗ Please fill in all quiz options before starting.";
+    alertMsg.classList.remove("d-none");
+    return;
+  }
+
+  if (amount <= 0 || isNaN(amount)) {
+    alertMsg.innerText = "❗ Please enter a valid number of questions.";
+    alertMsg.classList.remove("d-none");
+    return;
+  }
 
   currentQuiz = new Quiz(amount, category, difficulty, type);
   questions = await currentQuiz.getQuestions();
